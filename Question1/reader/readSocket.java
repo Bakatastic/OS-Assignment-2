@@ -5,27 +5,26 @@ import java.net.*;
 
 public class readSocket {
     public static void main(String[] args) {
+
         try {
-            ServerSocket sock = new ServerSocket(6013);
-            //Listen for connections
+            //ServerSocket sock = new ServerSocket(6013);
+            
             while (true) {
-                Socket client = sock.accept();
-                //Get input stream
-                InputStream in = client.getInputStream();
-                System.out.println(in.toString());
-                //Output stream to client
+                ServerSocket server = new ServerSocket(6013);
+                Socket client = server.accept();
+                
+                
+                //Socket clientSocket = client;
+                
                 PrintWriter pout = new PrintWriter(client.getOutputStream(),true);
-                pout.println(in.toString());
-                pout.println(client.toString());
-                //Checks to see if connection exists
-                //If exists, close connection and break loop
-                if(sock.isBound()){
-                    System.out.println("Bound!");
-                    client.close();
-                    break;
+                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    pout.println(inputLine);
                 }
-            }
-        }
+            }      
+        } 
         catch(IOException ioe){
             System.err.println(ioe);
         }

@@ -2,27 +2,23 @@ package connection;
 import java.net.*;
 import java.io.*;
 public class Connection {
-    public static void main(String[] args) {
-        try
+   public static void main(String[] args) {
+      
+        try 
         {
-            //Connect to server socket
-            Socket sock = new Socket("127.0.0.1", 6013);
+            Socket eSocket = new Socket("127.0.0.1", 6013);
+            PrintWriter pout = new PrintWriter(eSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(eSocket.getInputStream()));
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
             
-            InputStream in = sock.getInputStream();
-            BufferedReader bin = new BufferedReader(new InputStreamReader(in));
-            //Read stream from server
-            String line;
-            while ((line = bin.readLine())!= null)
+            String userInput = "TEST";
+            
+            while ((userInput = stdIn.readLine()) != null)
             {
-                System.out.println(line);
+                pout.println(userInput);
+                System.out.println("echo: " +  in.readLine());
             }
-            //Close connection with server
-            sock.close();
+        } catch (Exception e){
         }
-        catch(IOException ioe)
-        {
-            System.err.println(ioe);
-        }
-    }
-    
+    }   
 }
