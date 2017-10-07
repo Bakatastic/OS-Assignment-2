@@ -1,9 +1,9 @@
-package reader;
+package server;
 
 import java.io.*;
 import java.net.*;
 
-public class readSocket {
+public class Server {
     public static void main(String[] args) {
 
         try {
