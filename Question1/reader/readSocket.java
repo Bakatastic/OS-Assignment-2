@@ -7,17 +7,19 @@ public class readSocket {
     public static void main(String[] args) {
 
         try {
-                ServerSocket server = new ServerSocket(6013);
-                Socket client = server.accept();
+            //Open socket to connect
+            ServerSocket server = new ServerSocket(6013);
+            Socket sock = server.accept();
 
-                PrintWriter pout = new PrintWriter(client.getOutputStream(),true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    pout.println(inputLine);
-                }
-            client.close();
+            PrintWriter pout = new PrintWriter(sock.getOutputStream(),true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            //Echo back text to socket
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                pout.println(inputLine);
+            }
+            //Close socket connection
+            sock.close();
         }
         catch(IOException ioe){
             System.err.println(ioe);
